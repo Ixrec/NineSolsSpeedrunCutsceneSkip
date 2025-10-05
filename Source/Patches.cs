@@ -5,7 +5,7 @@ using UnityEngine;
 using Dialogue;
 using System;
 
-namespace CutsceneSkip;
+namespace SpeedrunCutsceneSkip;
 
 [HarmonyPatch]
 public class Patches {
@@ -127,15 +127,15 @@ public class Patches {
         }
 
         string id = "";
-        if (__instance.gameObject == GameObject.Find(CutsceneSkip.KuafuEndingChoiceCutsceneGOPath)) {
+        if (__instance.gameObject == GameObject.Find(SpeedrunCutsceneSkip.KuafuEndingChoiceCutsceneGOPath)) {
             Log.Info($"Not prompting player to skip this cutscene because it's in the Kuafu ending choice conversation, where even dialogue skipping softlocks.");
         } else if (__instance.name.EndsWith("_EnterScene")) {
             Log.Info($"skipping notification for {__instance.name} because transition 'cutscenes' are typically over before the player can even see the toast");
         } else {
-            id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip This Cutscene");
+            id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip This Cutscene");
         }
 
-        CutsceneSkip.activeCutscene = (__instance, id);
+        SpeedrunCutsceneSkip.activeCutscene = (__instance, id);
     }
 
     [HarmonyPostfix, HarmonyPatch(typeof(SimpleCutsceneManager), "PlayAnimation")]
@@ -152,16 +152,16 @@ public class Patches {
         if (delay != null) {
             await UniTask.DelayFrame((int)delay);
             Log.Info($"SimpleCutsceneManager_PlayAnimation acting on {goPath} with delay (i.e. Postfix patch + {delay} frame wait) to avoid softlocking");
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip This Cutscene");
-            CutsceneSkip.activeCutscene = (__instance, id);
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip This Cutscene");
+            SpeedrunCutsceneSkip.activeCutscene = (__instance, id);
         }
     }
 
     [HarmonyPrefix, HarmonyPatch(typeof(SimpleCutsceneManager), "End")]
     private static void SimpleCutsceneManager_End(SimpleCutsceneManager __instance) {
         Log.Debug($"SimpleCutsceneManager_End {__instance.name}");
-        if (CutsceneSkip.activeCutscene.Item1 == __instance)
-            CutsceneSkip.activeCutscene = (null, "");
+        if (SpeedrunCutsceneSkip.activeCutscene.Item1 == __instance)
+            SpeedrunCutsceneSkip.activeCutscene = (null, "");
     }
 
     public static List<string> dialogueSkipDenylist = new List<string> {
@@ -174,7 +174,7 @@ public class Patches {
 
     [HarmonyPrefix, HarmonyPatch(typeof(DialoguePlayer), "StartDialogue")]
     private static void DialoguePlayer_StartDialogue(DialoguePlayer __instance, DialogueGraph dialogueGraph, Action callback, bool withBackground) {
-        if (CutsceneSkip.KuafuEndingChoiceCutsceneActive()) {
+        if (SpeedrunCutsceneSkip.KuafuEndingChoiceCutsceneActive()) {
             Log.Info($"Not prompting player to skip this dialogue because it's in the Kuafu ending choice conversation, where even dialogue skipping softlocks.");
             return;
         }
@@ -185,11 +185,11 @@ public class Patches {
             Log.Info($"Not prompting player to skip this dialogue because it's in the skip denylist.");
         } else if (graphGoPath == "A2_SG4/Logic/PhoneActingLoigic(Part1)/妹妹來電1_Dialogue") {
             // Heng flashback special case: Wait until the first dialogue starts before allowing skips and prompting the user
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip This Heng Flashback");
-            CutsceneSkip.activeA2SG4.Item2 = id;
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip This Heng Flashback");
+            SpeedrunCutsceneSkip.activeA2SG4.Item2 = id;
         } else {
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip This Dialogue");
-            CutsceneSkip.dialogueSkipNotificationId = id;
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip This Dialogue");
+            SpeedrunCutsceneSkip.dialogueSkipNotificationId = id;
         }
     }
 
@@ -207,15 +207,15 @@ public class Patches {
         var goPath = GetFullPath(__instance.gameObject);
         Log.Debug($"VideoPlayAction_OnStateEnterImplement {goPath}");
         if (skippableVideos.Contains(goPath)) {
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip This Video");
-            CutsceneSkip.activeVideo = (__instance, id);
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip This Video");
+            SpeedrunCutsceneSkip.activeVideo = (__instance, id);
         }
     }
     [HarmonyPrefix, HarmonyPatch(typeof(VideoPlayAction), "VideoClipDone")]
     private static void VideoPlayAction_VideoClipDone(VideoPlayAction __instance) {
         Log.Debug($"VideoPlayAction_VideoClipDone {__instance.name}");
-        if (CutsceneSkip.activeVideo.Item1 == __instance)
-            CutsceneSkip.activeVideo = (null, "");
+        if (SpeedrunCutsceneSkip.activeVideo.Item1 == __instance)
+            SpeedrunCutsceneSkip.activeVideo = (null, "");
     }
 
     // The Heng flashback in Power Reservoir got its own special implementation class instead of using SimpleCutsceneManager
@@ -223,14 +223,14 @@ public class Patches {
     private static void A2_SG4_Logic_EnterLevelStart(A2_SG4_Logic __instance) {
         Log.Info($"A2_SG4_Logic_EnterLevelStart / Heng Power Reservoir flashback");
         // Don't post a notification at first. We don't want to allow skipping it until the first dialogue starts, since earlier skips are very glitchy.
-        CutsceneSkip.activeA2SG4 = (__instance, "");
+        SpeedrunCutsceneSkip.activeA2SG4 = (__instance, "");
     }
     [HarmonyPrefix, HarmonyPatch(typeof(A2_SG4_Logic), "OnLevelDestroy")]
     private static void A2_SG4_Logic_OnLevelDestroy(A2_SG4_Logic __instance) {
         Log.Info($"A2_SG4_Logic_OnLevelDestroy / Heng Power Reservoir flashback");
-        if (CutsceneSkip.activeA2SG4.Item1 == __instance) {
-            Notifications.CancelNotification(CutsceneSkip.activeA2SG4.Item2);
-            CutsceneSkip.activeA2SG4 = (null, "");
+        if (SpeedrunCutsceneSkip.activeA2SG4.Item1 == __instance) {
+            Notifications.CancelNotification(SpeedrunCutsceneSkip.activeA2SG4.Item2);
+            SpeedrunCutsceneSkip.activeA2SG4 = (null, "");
         }
     }
 
@@ -240,17 +240,17 @@ public class Patches {
         Log.Info($"A4_S5_Logic_EnterLevelStart / Sky Rending Claw Pre-Fight Scenes");
         // This also softlocks if you skip it at the earliest possible moment
         await UniTask.DelayFrame(100); // completely arbitrary number, have not tested how framerate settings affect this
-        var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip Pre-Claw Fight Cutscenes");
-        CutsceneSkip.activeA4S5 = (__instance, id);
+        var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip Pre-Claw Fight Cutscenes");
+        SpeedrunCutsceneSkip.activeA4S5 = (__instance, id);
     }
     [HarmonyPrefix, HarmonyPatch(typeof(A4_S5_Logic), "FooGameComplete")]
     private static void A4_S5_Logic_FooGameComplete(A4_S5_Logic __instance) {
         Log.Info($"A4_S5_Logic_FooGameComplete / Sky Rending Claw Post-Fight Scenes");
-        if (CutsceneSkip.activeA4S5.Item1 != null) {
-            Notifications.CancelNotification(CutsceneSkip.activeA4S5.Item2);
+        if (SpeedrunCutsceneSkip.activeA4S5.Item1 != null) {
+            Notifications.CancelNotification(SpeedrunCutsceneSkip.activeA4S5.Item2);
         }
-        var id = Notifications.AddNotification($"Press {CutsceneSkip.SkipKeybindText()} to Skip Post-Claw Fight Cutscene");
-        CutsceneSkip.activeA4S5 = (__instance, id);
+        var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.SkipKeybindText()} to Skip Post-Claw Fight Cutscene");
+        SpeedrunCutsceneSkip.activeA4S5 = (__instance, id);
     }
 
     // Implement prompts for the 2nd 'unwalk' keybind
@@ -259,11 +259,11 @@ public class Patches {
     private static void Player_SetStoryWalk(Player __instance, bool storyWalk, float walkModifier) {
         if (storyWalk) {
             Log.Info($"Player_SetStoryWalk called with storyWalk={storyWalk}, walkModifier={walkModifier}");
-            if (CutsceneSkip.storyWalkNotificationId != null) {
-                Notifications.CancelNotification(CutsceneSkip.storyWalkNotificationId);
+            if (SpeedrunCutsceneSkip.storyWalkNotificationId != null) {
+                Notifications.CancelNotification(SpeedrunCutsceneSkip.storyWalkNotificationId);
             }
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.UnwalkKeybindText()} to Disable 'Story Walk'");
-            CutsceneSkip.storyWalkNotificationId = id;
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.UnwalkKeybindText()} to Disable 'Story Walk'");
+            SpeedrunCutsceneSkip.storyWalkNotificationId = id;
         }
     }
 
@@ -271,11 +271,11 @@ public class Patches {
     private static void Player_SetHasHat(Player __instance, bool hastHat) {
         if (hastHat) {
             Log.Info($"Player_SetHasHat called with hastHat [sic] = {hastHat}");
-            if (CutsceneSkip.storyWalkNotificationId != null) {
-                Notifications.CancelNotification(CutsceneSkip.storyWalkNotificationId);
+            if (SpeedrunCutsceneSkip.storyWalkNotificationId != null) {
+                Notifications.CancelNotification(SpeedrunCutsceneSkip.storyWalkNotificationId);
             }
-            var id = Notifications.AddNotification($"Press {CutsceneSkip.UnwalkKeybindText()} to Doff Yi's Hat");
-            CutsceneSkip.storyWalkNotificationId = id;
+            var id = Notifications.AddNotification($"Press {SpeedrunCutsceneSkip.UnwalkKeybindText()} to Doff Yi's Hat");
+            SpeedrunCutsceneSkip.storyWalkNotificationId = id;
         }
     }
 }

@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyDescriptionAttribute("A Nine Sols mod that enables skipping any cutscene or dialogue (that won\'t break " +
     "the game).")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d7af939718f1f95aa37bb619d8a229d3d2010b6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53a83566d9994e376089820e928497e3ea910572")]
 [assembly: System.Reflection.AssemblyProductAttribute("CutsceneSkip")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CutsceneSkip")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

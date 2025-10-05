@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
-namespace CutsceneSkip;
+namespace SpeedrunCutsceneSkip;
 
 /*
  * I wrote my own notification manager for two reasons:

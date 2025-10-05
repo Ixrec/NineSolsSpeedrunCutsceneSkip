@@ -1,6 +1,6 @@
 using BepInEx.Logging;
 
-namespace CutsceneSkip;
+namespace SpeedrunCutsceneSkip;
 
 internal static class Log {
     private static ManualLogSource? logSource;

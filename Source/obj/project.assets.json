@@ -2720,19 +2720,19 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "0.0.1",
     "restore": {
-      "projectUniqueName": "C:\\Users\\j-pop\\git\\NineSolsCutsceneSkip\\Source\\CutsceneSkip.csproj",
-      "projectName": "CutsceneSkip",
-      "projectPath": "C:\\Users\\j-pop\\git\\NineSolsCutsceneSkip\\Source\\CutsceneSkip.csproj",
+      "projectUniqueName": "C:\\Users\\j-pop\\git\\NineSolsSpeedrunCutsceneSkip\\Source\\SpeedrunCutsceneSkip.csproj",
+      "projectName": "SpeedrunCutsceneSkip",
+      "projectPath": "C:\\Users\\j-pop\\git\\NineSolsSpeedrunCutsceneSkip\\Source\\SpeedrunCutsceneSkip.csproj",
       "packagesPath": "C:\\Users\\j-pop\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\j-pop\\git\\NineSolsCutsceneSkip\\Source\\obj\\",
+      "outputPath": "C:\\Users\\j-pop\\git\\NineSolsSpeedrunCutsceneSkip\\Source\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\j-pop\\git\\NineSolsCutsceneSkip\\NuGet.Config",
+        "C:\\Users\\j-pop\\git\\NineSolsSpeedrunCutsceneSkip\\NuGet.Config",
         "C:\\Users\\j-pop\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
