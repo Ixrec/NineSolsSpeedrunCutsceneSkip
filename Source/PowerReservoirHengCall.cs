@@ -18,7 +18,7 @@ internal class PowerReservoirHengCall
     {
         if (SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
         {
-            Log.Info($"SpeedrunCutsceneSkip preparing to skip the Power Reservoir (Center) Heng call");
+            Log.Info($"SpeedrunCutsceneSkip waiting for dialogue to start before skipping the Power Reservoir (Center) Heng call");
             activeA2SG4 = __instance;
         }
     }
