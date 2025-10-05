@@ -1,9 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using Dialogue;
 using HarmonyLib;
 using NineSolsAPI;
-using UnityEngine;
 
 namespace SpeedrunCutsceneSkip;
 
