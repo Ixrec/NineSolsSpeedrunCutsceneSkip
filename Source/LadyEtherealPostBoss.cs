@@ -13,8 +13,11 @@ internal class LadyEtherealPostBoss
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "GameLevel/Room/Prefab/SimpleCutSceneFSM_結局_大爆炸/--[States]/FSM/[State] PlayCutSceneEnd/[Action] VideoPlayAction")
             {
-                Log.Info($"SpeedrunCutsceneSkip skipping the post-Lady Ethereal Heng flashback video");
-                AccessTools.Method(typeof(VideoPlayAction), "TrySkip").Invoke(__instance, []);
+                if (SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
+                {
+                    Log.Info($"SpeedrunCutsceneSkip skipping the post-Lady Ethereal Heng flashback video");
+                    AccessTools.Method(typeof(VideoPlayAction), "TrySkip").Invoke(__instance, []);
+                }
             }
         }
     }
