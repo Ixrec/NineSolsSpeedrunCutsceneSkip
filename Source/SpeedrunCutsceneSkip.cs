@@ -13,7 +13,7 @@ public class SpeedrunCutsceneSkip : BaseUnityPlugin {
     // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/4_configuration.html
     public ConfigEntry<bool> SkipSetting = null!;
 
-    public static SpeedrunCutsceneSkip Instance = null;
+    public static SpeedrunCutsceneSkip Instance = null!;
 
     private Harmony harmony = null!;
 
