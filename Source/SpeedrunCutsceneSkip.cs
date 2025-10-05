@@ -29,39 +29,11 @@ public class SpeedrunCutsceneSkip : BaseUnityPlugin {
             "Turn this off and this mod will no longer do anything.");
 
         Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
-
-        Notifications.Awake();
-    }
-
-    public static string dialogueSkipNotificationId = "";
-    public static (SimpleCutsceneManager?, string) activeCutscene = (null, "");
-
-    private void SkipActiveCutsceneOrDialogue() {
-        var dpgo = GameObject.Find("GameCore(Clone)/RCG LifeCycle/UIManager/GameplayUICamera/Always Canvas/DialoguePlayer(KeepThisEnable)");
-        var dp = dpgo?.GetComponent<DialoguePlayer>();
-
-        if (activeCutscene.Item1 != null) {
-            var scm = activeCutscene.Item1;
-            Log.Info($"calling TrySkip() on {scm.name}");
-            AccessTools.Method(typeof(SimpleCutsceneManager), "TrySkip").Invoke(scm, []);
-            if (AccessTools.FieldRefAccess<SimpleCutsceneManager, bool>("isMangaPauseing").Invoke(scm)) {
-                Log.Info($"also calling Resume() since it was 'manga paused'");
-                AccessTools.Method(typeof(SimpleCutsceneManager), "Resume").Invoke(scm, []);
-            }
-            Notifications.CancelNotification(activeCutscene.Item2);
-            activeCutscene = (null, "");
-            return;
-        }
-    }
-
-    private void Update() {
-        Notifications.Update();
     }
 
     private void OnDestroy() {
         // Make sure to clean up resources here to support hot reloading
 
         harmony.UnpatchSelf();
-        Notifications.OnDestroy();
     }
 }
