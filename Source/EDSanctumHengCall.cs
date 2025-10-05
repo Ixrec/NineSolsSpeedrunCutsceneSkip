@@ -15,16 +15,16 @@ internal class EDSanctumHengCall
     [HarmonyPostfix, HarmonyPatch(typeof(SimpleCutsceneManager), "PlayAnimation")]
     private static async void SimpleCutsceneManager_PlayAnimation_Postfix(SimpleCutsceneManager __instance)
     {
-        if (SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
+        if (!SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
+            return;
+
+        if (__instance.transform.parent.parent.parent.name == "SimpleCutSceneFSM_A9_S3妹妹回憶")
         {
-            if (__instance.transform.parent.parent.parent.name == "SimpleCutSceneFSM_A9_S3妹妹回憶")
+            var goPath = FullPath.GetFullPath(__instance.gameObject);
+            if (goPath == "A9_S3/Room/SimpleCutSceneFSM_A9_S3妹妹回憶/FSM Animator/LogicRoot/[CutScene]")
             {
-                var goPath = FullPath.GetFullPath(__instance.gameObject);
-                if (goPath == "A9_S3/Room/SimpleCutSceneFSM_A9_S3妹妹回憶/FSM Animator/LogicRoot/[CutScene]")
-                {
-                    Log.Info($"SpeedrunCutsceneSkip waiting for dialogue to start before skipping the ED Sanctum Heng call");
-                    activeSanctumCall = __instance;
-                }
+                Log.Info($"SpeedrunCutsceneSkip waiting for dialogue to start before skipping the ED Sanctum Heng call");
+                activeSanctumCall = __instance;
             }
         }
     }
@@ -32,19 +32,19 @@ internal class EDSanctumHengCall
     [HarmonyPrefix, HarmonyPatch(typeof(DialoguePlayer), "StartDialogue")]
     private static async void DialoguePlayer_StartDialogue(DialoguePlayer __instance, DialogueGraph dialogueGraph, Action callback, bool withBackground)
     {
-        if (SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
+        if (!SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
+            return;
+
+        if (activeSanctumCall != null)
         {
-            if (activeSanctumCall != null)
-            {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the ED Sanctum Heng call");
+            Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the ED Sanctum Heng call");
 
-                await UniTask.DelayFrame(100);
+            await UniTask.DelayFrame(100);
 
-                Log.Info($"SpeedrunCutsceneSkip skipping the ED Sanctum Heng call");
-                __instance.TrySkip();
-                activeSanctumCall.TrySkip();
-                activeSanctumCall = null;
-            }
+            Log.Info($"SpeedrunCutsceneSkip skipping the ED Sanctum Heng call");
+            __instance.TrySkip();
+            activeSanctumCall.TrySkip();
+            activeSanctumCall = null;
         }
     }
 }
