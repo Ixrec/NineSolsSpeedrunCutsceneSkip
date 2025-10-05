@@ -9,7 +9,7 @@ namespace SpeedrunCutsceneSkip;
 internal class EDSanctumHengCall
 {
     // For some reason we have to wait until the first dialogue starts before TrySkip() will work,
-    // so we end up with two patches: one to record the A2_SG4_Logic instance, and one to actually skip it.
+    // so we end up with two patches: one to record the cutscene instance, and one to actually skip it.
     private static SimpleCutsceneManager? activeSanctumCall = null;
 
     [HarmonyPostfix, HarmonyPatch(typeof(SimpleCutsceneManager), "PlayAnimation")]
