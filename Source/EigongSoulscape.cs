@@ -20,6 +20,9 @@ internal class EigongSoulscape
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "VR_TaoChang/Room/Prefab/Simple Binding Tool/SimpleCutSceneFSM_易公陷阱/FSM Animator/LogicRoot/[CutScene]")
             {
+                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Eigong first dialogue in her soulscape");
+
+                await UniTask.DelayFrame(100);
                 Log.Info($"SpeedrunCutsceneSkip skipping the Eigong confrontation inside her soulscape");
                 __instance.TrySkip();
             }
