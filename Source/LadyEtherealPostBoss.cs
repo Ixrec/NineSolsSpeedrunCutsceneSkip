@@ -7,7 +7,7 @@ namespace SpeedrunCutsceneSkip;
 internal class LadyEtherealPostBoss
 {
     [HarmonyPostfix, HarmonyPatch(typeof(SimpleCutsceneManager), "PlayAnimation")]
-    private static void SimpleCutsceneManager_PlayAnimation_Postfix(SimpleCutsceneManager __instance)
+    private static async void SimpleCutsceneManager_PlayAnimation_Postfix(SimpleCutsceneManager __instance)
     {
         if (!SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
             return;
