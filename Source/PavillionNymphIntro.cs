@@ -19,10 +19,12 @@ internal class PavillionNymphIntro
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Ruyi activation cutscene");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Ruyi restore sequence");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.PavillionNymphIntro_RuyiActivation);
             }
         }
         if (__instance.transform.parent.parent.parent.name == "SimpleCutSceneFSM_軒軒到基地演出")
@@ -32,10 +34,12 @@ internal class PavillionNymphIntro
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Shuanshuan intro dialogue");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Shuanshuan dialogue");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.PavillionNymphIntro_ShuanshuanDialogue);
             }
         }
     }

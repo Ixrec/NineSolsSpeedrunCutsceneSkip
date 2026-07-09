@@ -18,10 +18,12 @@ internal class CentralHallPhone
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Warehouse Heng call");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Senate Hall call");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.CentralHallPhone);
             }
         }
     }

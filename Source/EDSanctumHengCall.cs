@@ -39,12 +39,14 @@ internal class EDSanctumHengCall
         {
             Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the ED Sanctum Heng call");
 
-            await UniTask.DelayFrame(100);
+            await UniTask.Delay(1667);
 
             Log.Info($"SpeedrunCutsceneSkip skipping the ED Sanctum Heng call");
             __instance.TrySkip();
             activeSanctumCall.TrySkip();
             activeSanctumCall = null;
+
+            SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.EDSanctumHengCall);
         }
     }
 }

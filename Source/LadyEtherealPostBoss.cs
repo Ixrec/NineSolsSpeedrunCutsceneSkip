@@ -46,10 +46,12 @@ internal class LadyEtherealPostBoss
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the post-Lady Ethereal Heng flashback video");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the post-Lady Ethereal Heng flashback video");
                 AccessTools.Method(typeof(VideoPlayAction), "TrySkip").Invoke(__instance, []);
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.LadyEtherealPostBoss);
             }
         }
     }

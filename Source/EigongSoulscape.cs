@@ -22,7 +22,7 @@ internal class EigongSoulscape
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Eigong first dialogue in her soulscape");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
                 Log.Info($"SpeedrunCutsceneSkip skipping the Eigong confrontation inside her soulscape");
                 __instance.TrySkip();
             }
@@ -35,7 +35,7 @@ internal class EigongSoulscape
             {
                 Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Heng flashback inside of Eigong's soulscape");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Heng flashback inside of Eigong's soulscape");
                 __instance.TrySkip();
@@ -49,6 +49,8 @@ internal class EigongSoulscape
             {
                 Log.Info($"SpeedrunCutsceneSkip skipping the wakeup cutscene after Eigong's soulscape");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.EigongSoulscape);
             }
         }
     }

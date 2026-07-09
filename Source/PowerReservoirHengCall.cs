@@ -1,6 +1,8 @@
-﻿using Dialogue;
+﻿using Cysharp.Threading.Tasks;
+using Dialogue;
 using HarmonyLib;
 using System;
+using System.Threading.Tasks;using Cysharp.Threading.Tasks;
 
 namespace SpeedrunCutsceneSkip;
 
@@ -9,37 +11,18 @@ internal class PowerReservoirHengCall
 {
     // The Heng flashback in Power Reservoir has its own special class called A2_SG4_Logic instead of SimpleCutsceneManager
 
-    // For some reason we have to wait until the first dialogue starts before TrySkip() will work,
-    // so we end up with two patches: one to record the A2_SG4_Logic instance, and one to actually skip it.
-    private static A2_SG4_Logic? activeA2SG4 = null;
-
     [HarmonyPrefix, HarmonyPatch(typeof(A2_SG4_Logic), "EnterLevelStart")]
-    private static void A2_SG4_Logic_EnterLevelStart(A2_SG4_Logic __instance)
+    private static async void A2_SG4_Logic_EnterLevelStart(A2_SG4_Logic __instance)
     {
         if (!SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
             return;
 
-        Log.Info($"SpeedrunCutsceneSkip waiting for dialogue to start before skipping the Power Reservoir (Center) Heng call");
-        activeA2SG4 = __instance;
-    }
+        Log.Info($"SpeedrunCutsceneSkip skipping the Power Reservoir (Center) Heng call");
 
-    [HarmonyPrefix, HarmonyPatch(typeof(DialoguePlayer), "StartDialogue")]
-    private static void DialoguePlayer_StartDialogue(DialoguePlayer __instance, DialogueGraph dialogueGraph, Action callback, bool withBackground)
-    {
-        if (!SpeedrunCutsceneSkip.Instance.SkipSetting.Value)
-            return;
+        // Short delay before trying to skip. Need to make sure the skip is called before the phone call starts as that causes softlocks when skipping
+        await UniTask.Delay(250);
 
-        if (dialogueGraph.gameObject.name == "妹妹來電1_Dialogue" && activeA2SG4 != null)
-        {
-            var graphGoPath = FullPath.GetFullPath(dialogueGraph.gameObject);
-            Log.Debug($"DialoguePlayer_StartDialogue for dialogueGraph {graphGoPath}");
-
-            if (graphGoPath == "A2_SG4/Logic/PhoneActingLoigic(Part1)/妹妹來電1_Dialogue")
-            {
-                Log.Info($"SpeedrunCutsceneSkip skipping the Power Reservoir (Center) Heng call");
-                activeA2SG4!.TrySkip();
-                activeA2SG4 = null;
-            }
-        }
+        __instance.TrySkip();
+        SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.PowerReservoirHengCall);
     }
 }
