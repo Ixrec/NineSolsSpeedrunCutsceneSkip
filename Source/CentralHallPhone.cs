@@ -16,7 +16,7 @@ internal class CentralHallPhone
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "AG_S1/Room/SimpleCutSceneFSM_Tree intro/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Warehouse Heng call");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Warehouse Heng call");
 
                 await UniTask.Delay(1667);
 

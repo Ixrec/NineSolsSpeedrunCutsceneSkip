@@ -37,7 +37,7 @@ internal class EDSanctumHengCall
 
         if (activeSanctumCall != null)
         {
-            Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the ED Sanctum Heng call");
+            Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the ED Sanctum Heng call");
 
             await UniTask.Delay(1667);
 

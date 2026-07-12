@@ -17,7 +17,7 @@ internal class WarehouseHengCall
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "A2_SG4/Room/妹妹回憶_SimpleCutSceneFSM/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Warehouse Heng call");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Warehouse Heng call");
 
                 await UniTask.Delay(1667);
 
