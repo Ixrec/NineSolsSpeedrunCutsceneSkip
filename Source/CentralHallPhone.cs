@@ -16,12 +16,14 @@ internal class CentralHallPhone
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "AG_S1/Room/SimpleCutSceneFSM_Tree intro/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Warehouse Heng call");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Warehouse Heng call");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Senate Hall call");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.CentralHallPhone);
             }
         }
     }

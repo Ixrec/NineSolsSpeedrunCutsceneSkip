@@ -17,12 +17,14 @@ internal class PavillionNymphIntro
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "AG_S2/Room/Prefab/ControlRoom FSM Binding Tool/NPC_AICore_Base/NPC_AICore_Base_FSM/FSM Animator/LogicRoot/NPC_AICore_FSM/General FSM Object/Animator(FSM)/LogicRoot/[CutScene]初次對話演出")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Ruyi activation cutscene");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Ruyi activation cutscene");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Ruyi restore sequence");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.PavillionNymphIntro_RuyiActivation);
             }
         }
         if (__instance.transform.parent.parent.parent.name == "SimpleCutSceneFSM_軒軒到基地演出")
@@ -30,12 +32,14 @@ internal class PavillionNymphIntro
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "AG_S2/Room/NPCs/議會演出相關Binding/SimpleCutSceneFSM_軒軒到基地演出/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Shuanshuan intro dialogue");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Shuanshuan intro dialogue");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Shuanshuan dialogue");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.PavillionNymphIntro_ShuanshuanDialogue);
             }
         }
     }

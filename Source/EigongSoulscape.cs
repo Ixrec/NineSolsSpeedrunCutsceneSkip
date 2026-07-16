@@ -20,9 +20,9 @@ internal class EigongSoulscape
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "VR_TaoChang/Room/Prefab/Simple Binding Tool/SimpleCutSceneFSM_易公陷阱/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Eigong first dialogue in her soulscape");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Eigong first dialogue in her soulscape");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
                 Log.Info($"SpeedrunCutsceneSkip skipping the Eigong confrontation inside her soulscape");
                 __instance.TrySkip();
             }
@@ -33,9 +33,9 @@ internal class EigongSoulscape
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "VR_TaoChang/Room/SimpleCutSceneFSM_易公後妹妹回憶/FSM Animator/LogicRoot/[CutScene]")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the Heng flashback inside of Eigong's soulscape");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the Heng flashback inside of Eigong's soulscape");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the Heng flashback inside of Eigong's soulscape");
                 __instance.TrySkip();
@@ -49,6 +49,8 @@ internal class EigongSoulscape
             {
                 Log.Info($"SpeedrunCutsceneSkip skipping the wakeup cutscene after Eigong's soulscape");
                 __instance.TrySkip();
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.EigongSoulscape);
             }
         }
     }

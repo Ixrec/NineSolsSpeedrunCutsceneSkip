@@ -7,7 +7,8 @@ namespace SpeedrunCutsceneSkip;
 
 [BepInDependency(NineSolsAPICore.PluginGUID)]
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-public class SpeedrunCutsceneSkip : BaseUnityPlugin {
+public class SpeedrunCutsceneSkip : BaseUnityPlugin
+{
     // https://docs.bepinex.dev/articles/dev_guide/plugin_tutorial/4_configuration.html
     public ConfigEntry<bool> SkipSetting = null!;
 
@@ -15,7 +16,8 @@ public class SpeedrunCutsceneSkip : BaseUnityPlugin {
 
     private Harmony harmony = null!;
 
-    private void Awake() {
+    private void Awake()
+    {
         Log.Init(Logger);
         RCGLifeCycle.DontDestroyForever(gameObject);
         Instance = this;
@@ -29,9 +31,18 @@ public class SpeedrunCutsceneSkip : BaseUnityPlugin {
         Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         // Make sure to clean up resources here to support hot reloading
-
         harmony.UnpatchSelf();
+    }
+
+    private int LivesplitHook_SkippedCutscenesCount = 0;
+    private float LivesplitHook_TimeToAdd = 0.0f;
+
+    public static void AddSkippedTimeToLivesplit(float time)
+    {
+        Instance.LivesplitHook_TimeToAdd = time;
+        Instance.LivesplitHook_SkippedCutscenesCount++;
     }
 }

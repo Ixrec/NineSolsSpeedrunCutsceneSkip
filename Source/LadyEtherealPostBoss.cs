@@ -44,12 +44,14 @@ internal class LadyEtherealPostBoss
             var goPath = FullPath.GetFullPath(__instance.gameObject);
             if (goPath == "A7_S6_Memory_Butterfly_CutScene_GameLevel/A7_S6_Cutscene FSM/--[States]/FSM/[State] PlayingVideo/[Action] VideoPlayAction")
             {
-                Log.Info($"SpeedrunCutsceneSkip waiting 100 frames before skipping the post-Lady Ethereal Heng flashback video");
+                Log.Info($"SpeedrunCutsceneSkip waiting 1.6 seconds before skipping the post-Lady Ethereal Heng flashback video");
 
-                await UniTask.DelayFrame(100);
+                await UniTask.Delay(1667);
 
                 Log.Info($"SpeedrunCutsceneSkip skipping the post-Lady Ethereal Heng flashback video");
                 AccessTools.Method(typeof(VideoPlayAction), "TrySkip").Invoke(__instance, []);
+
+                SpeedrunCutsceneSkip.AddSkippedTimeToLivesplit(CutsceneTimingConstants.LadyEtherealPostBoss);
             }
         }
     }
