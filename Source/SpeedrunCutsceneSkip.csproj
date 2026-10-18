@@ -3,7 +3,7 @@
         <AssemblyName>SpeedrunCutsceneSkip</AssemblyName>
         <Description>A Nine Sols mod that auto-skips a handful of cutscenes for speedrunners.</Description>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>0.0.1</Version>
+        <Version>0.1.0</Version>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <PublishRelease>true</PublishRelease>

@@ -4,7 +4,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "Ixrec"
 name = "SpeedrunCutsceneSkip"
-versionNumber = "0.0.1"
+versionNumber = "0.1.0"
 description = "A Nine Sols mod that auto-skips a handful of cutscenes for speedrunners."
 websiteUrl = "https://github.com/Ixrec/NineSolsSpeedrunCutsceneSkip"
 containsNsfwContent = false
